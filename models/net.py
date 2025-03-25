@@ -67,9 +67,15 @@ class GraphConvolution(nn.Module):
         self.dynamic_weight = nn.Conv1d(in_features, out_features, 1)
         self.num_nodes= num_nodes
 
-    def forward_static_gcn(self, x):#4,512,150
+    def forward_gcn1(self, x):#4,512,150
         x = self.static_adj(x.transpose(1, 2))
         x = self.static_weight(x.transpose(1, 2))
+        return x
+    def forward_gcn2(self, x, dynamic_adj):
+        x = torch.matmul(x, dynamic_adj)
+        x = self.relu(x)
+        x = self.dynamic_weight(x)
+        x = self.relu(x)
         return x
 
     def forward(self, x, dynamic_adj):#4,150,512   4,150,150 
@@ -80,9 +86,9 @@ class GraphConvolution(nn.Module):
         dynamic_adj = dynamic_adj + identity_matrix*0.8 #4,80,80
         
         x=x.transpose(1, 2)#4,512,150
-        out_static = self.forward_static_gcn(x)
+        out_static = self.forward_gcn1(x)
         x = x + out_static # residual
-
+        x = self.forward_gcn2(x, dynamic_adj)
         return x
 
 
