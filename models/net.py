@@ -47,9 +47,9 @@ def D(p, z, version='simplified'): # negative cosine similarity
         raise Exception
 
 
-class DynamicGraphConvolution(nn.Module):
+class GraphConvolution(nn.Module):
     def __init__(self, in_features, out_features, num_nodes):
-        super(DynamicGraphConvolution, self).__init__()
+        super(GraphConvolution, self).__init__()
 
         self.static_adj = nn.Sequential(
             nn.Conv1d(num_nodes, num_nodes, 1, bias=False),
@@ -70,27 +70,6 @@ class DynamicGraphConvolution(nn.Module):
     def forward_static_gcn(self, x):#4,512,150
         x = self.static_adj(x.transpose(1, 2))
         x = self.static_weight(x.transpose(1, 2))
-        return x
-
-    def forward_construct_dynamic_graph(self, x):
-        ### Model global representations ###
-        x_glb = self.gap(x)
-        x_glb = self.conv_global(x_glb)
-        x_glb = self.bn_global(x_glb)
-        x_glb = self.relu(x_glb)
-        x_glb = x_glb.expand(x_glb.size(0), x_glb.size(1), x.size(2))
-        
-        ### Construct the dynamic correlation matrix ###
-        x = torch.cat((x_glb, x), dim=1)
-        dynamic_adj = self.conv_create_co_mat(x)
-        dynamic_adj = torch.sigmoid(dynamic_adj)
-        return dynamic_adj
-
-    def forward_dynamic_gcn(self, x, dynamic_adj):
-        x = torch.matmul(x, dynamic_adj)
-        x = self.relu(x)
-        x = self.dynamic_weight(x)
-        x = self.relu(x)
         return x
 
     def forward(self, x, dynamic_adj):#4,150,512   4,150,150 
@@ -149,7 +128,7 @@ class Model(nn.Module):
             self.has_printed= False
             os.makedirs(save_dir+'/tsne_figs/train')
             os.makedirs(save_dir+'/tsne_figs/test')
-        self.gcn = DynamicGraphConvolution(self.in_channel, self.in_channel, num_sample)
+        self.gcn = GraphConvolution(self.in_channel, self.in_channel, num_sample)
         self.fc = nn.Conv2d(self.nFeat, 5, (1,1), bias=False)
         
         self.transform_matrix =  nn.Sequential(
