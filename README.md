@@ -12,7 +12,8 @@ This repository provides code for "Knowledge-Driven Prototype Refinement for Few
  - [`Pytorch`](http://pytorch.org/) >= 1.7.0 
  - `Torchvision` = 0.10
  - `scikit-image` = 0.18.1
- - 
+
+ 
 ## Vord Vector Preparation
 Check and replace the relevant files that store category tags
 
