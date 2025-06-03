@@ -14,7 +14,7 @@ This repository provides code for "Knowledge-Driven Prototype Refinement for Few
  - `scikit-image` = 0.18.1
 
  
-## Vord Vector Preparation
+## Word Vector Preparation
 Check and replace the relevant files that store category tags
 
 ```bash
@@ -36,8 +36,24 @@ check wordpkl_path in ./datasets/XXX-dataset change to the word vector of the co
 python train.py --dataset [type of dataset] --model [backbone] --num_classes [num-classes] --nExemplars [num-shots]
 ```
 
+
 ## Acknowledgement
 
 This code is based on the implementations of [**fewshot-CAN**](https://github.com/blue-blue272/fewshot-CAN).
 
+## Citations
 
+Please remember to cite us if u find this useful.
+
+@article{chen_knowledge-driven_2025,
+	title = {Knowledge-driven prototype refinement for few-shot fine-grained recognition},
+	volume = {318},
+	issn = {0950-7051},
+	url = {https://www.sciencedirect.com/science/article/pii/S0950705125005817},
+	doi = {https://doi.org/10.1016/j.knosys.2025.113535},
+	journal = {Knowledge-Based Systems},
+	author = {Chen, Jiale and Xu, Feng and Lyu, Xin and Zeng, Tao and Li, Xin and Chen, Shangjing},
+	year = {2025},
+	keywords = {Few-shot learning, Fine-grained recognition, Knowledge transfer, Semantic alignment},
+	pages = {113535},
+}
