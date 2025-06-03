@@ -45,6 +45,7 @@ This code is based on the implementations of [**fewshot-CAN**](https://github.co
 
 Please remember to cite us if u find this useful.
 
+```bash
 @article{chen_knowledge-driven_2025,
 	title = {Knowledge-driven prototype refinement for few-shot fine-grained recognition},
 	volume = {318},
@@ -57,3 +58,4 @@ Please remember to cite us if u find this useful.
 	keywords = {Few-shot learning, Fine-grained recognition, Knowledge transfer, Semantic alignment},
 	pages = {113535},
 }
+```
